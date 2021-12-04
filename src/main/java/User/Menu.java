@@ -25,27 +25,23 @@ public class Menu {
                 ***------------------------------------------------***
                 Виберіть дію:
                 0 - вийти з програми
-                1 - змінити пароль
-                2 - додати електроприлад
-                3 - показати електроприлади
-                4 - видалити електроприлад
-                5 - порахувати загальну потужність
-                6 - знайти електроприлади в заданому діапазоні потужності""");
-            choice = inputInt(0, 6);
+                1 - додати електроприлад
+                2 - показати електроприлади
+                3 - видалити електроприлад
+                4 - порахувати загальну потужність
+                5 - знайти електроприлади в заданому діапазоні потужності""");
+            choice = inputInt(0, 5);
             switch (choice) {
                 case 1 -> {
-                    // TODO зміна паролю
-                }
-                case 2 -> {
                     Appliance newAppliance = createAppliance();
                     if (newAppliance != null) {
                         user.addAppliance(newAppliance);
                     }
                 }
-                case 3 -> findAppliance();
-                case 4 -> removeAppliance();
-                case 5 -> user.calculatePower();
-                case 6 -> findApplianceWithinPowerLimits();
+                case 2 -> findAppliance();
+                case 3 -> removeAppliance();
+                case 4 -> user.calculatePower();
+                case 5 -> findApplianceWithinPowerLimits();
                 default -> {
                     return;
                 }
