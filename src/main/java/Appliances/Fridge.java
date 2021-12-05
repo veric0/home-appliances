@@ -14,19 +14,24 @@ public class Fridge extends Appliance {
     }
 
     @Override
-    public void repair() {
+    public String repair() {
         power = basicPower;
         System.out.println("Холодильник №" + id + "відремонтований!");
+        return "Холодильник №" + id + "відремонтований!";
     }
 
     @Override
-    public void plugIn() {
+    public String plugIn() {
         System.out.println("Холодильник №" + id + "почав охолоджувати продукти");
+        isPlugged = true;
+        return "Холодильник №" + id + "почав охолоджувати продукти";
     }
 
     @Override
-    public void unplug() {
+    public String unplug() {
         System.out.println("Холодильник №" + id + "вимкнули");
+        isPlugged = false;
+        return "Холодильник №" + id + "вимкнули";
     }
 
     @Override

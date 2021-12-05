@@ -16,6 +16,6 @@ public class IsNeedsRepair implements Condition {
 
     @Override
     public String toSql() {
-        return "power < (basicPower * 3 / 4)";
+        return "power <= (basicPower * 3 / 4)";
     }
 }

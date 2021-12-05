@@ -13,19 +13,24 @@ public class Microwave extends Appliance {
     }
 
     @Override
-    public void repair() {
+    public String repair() {
         power = basicPower;
         System.out.println("Мікрохвильова піч №" + id + "відремонтована!");
+        return "Мікрохвильова піч №" + id + "відремонтована!";
     }
 
     @Override
-    public void plugIn() {
+    public String plugIn() {
         System.out.println("Мікрохвильова піч №" + id + "почала нагрівати продукти всередині");
+        isPlugged = true;
+        return "Мікрохвильова піч №" + id + "почала нагрівати продукти всередині";
     }
 
     @Override
-    public void unplug() {
+    public String unplug() {
         System.out.println("Мікрохвильова піч №" + id + "завершила нагрівати");
+        isPlugged = false;
+        return "Мікрохвильова піч №" + id + "завершила нагрівати";
     }
 
     @Override

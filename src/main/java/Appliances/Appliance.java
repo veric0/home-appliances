@@ -30,7 +30,7 @@ public abstract class Appliance {
     }
 
     public boolean isNeedsRepair() {
-        return power > basicPower * 3 / 4;
+        return power <= basicPower * 3 / 4;
     }
     public boolean isPowerWithinLimits(int min, int max) {
         return (power >= min) && (power <= max);
@@ -39,8 +39,8 @@ public abstract class Appliance {
         return isPlugged;
     }
 
-    abstract public void repair();
-    public abstract void plugIn();
-    public abstract void unplug();
+    abstract public String repair();
+    public abstract String plugIn();
+    public abstract String unplug();
 
 }

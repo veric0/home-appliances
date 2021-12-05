@@ -14,19 +14,24 @@ public class Blender extends Appliance{
     }
 
     @Override
-    public void repair() {
+    public String repair() {
         power = basicPower;
         System.out.println("Блендер №" + id + "відремонтований!");
+        return "Блендер №" + id + "відремонтований!";
     }
 
     @Override
-    public void plugIn() {
+    public String plugIn() {
         System.out.println("Блендер №" + id + "почав працювати");
+        isPlugged = true;
+        return "Блендер №" + id + "почав працювати";
     }
 
     @Override
-    public void unplug() {
+    public String unplug() {
         System.out.println("Блендер №" + id + "вимкнули");
+        isPlugged = false;
+        return "Блендер №" + id + "вимкнули";
     }
 
     @Override

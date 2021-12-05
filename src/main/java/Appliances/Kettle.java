@@ -13,19 +13,24 @@ public class Kettle extends Appliance {
     }
 
     @Override
-    public void repair() {
+    public String repair() {
         power = basicPower;
         System.out.println("Чайник №" + id + "відремонтований!");
+        return "Чайник №" + id + "відремонтований!";
     }
 
     @Override
-    public void plugIn() {
+    public String plugIn() {
         System.out.println("Чайник №" + id + "почав гріти воду");
+        isPlugged = true;
+        return "Чайник №" + id + "почав гріти воду";
     }
 
     @Override
-    public void unplug() {
+    public String unplug() {
         System.out.println("Чайник №" + id + "закипів");
+        isPlugged = false;
+        return "Чайник №" + id + "закипів";
     }
 
     @Override
