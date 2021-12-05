@@ -98,8 +98,7 @@ public class Main {
                     }
                     else isPasswordConfirmed = true;
                 }
-                // TODO зашифрувати пароль
-                String query2 = " insert into users (userName, password) values ('" + userName + "', '" + password + "');";
+                String query2 = "insert into users (userName, password) values ('" + userName + "', '" + password + "');";
                 if (statement.executeUpdate(query2) == 1) {
                     System.out.println("Користувач успішно зареєстрований!");
                     resultSet = statement.executeQuery("select LAST_INSERT_ID() as last_id;");
