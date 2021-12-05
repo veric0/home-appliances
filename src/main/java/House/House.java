@@ -20,6 +20,7 @@ public class House {
     }
 
     public void addAppliance(Appliance appliance) {
+        if (appliance == null) return;
         try (Statement statement = connection.createStatement()) {
             String query1 = "insert into appliances (type, basicPower, power) values ('"
                     + appliance.getClass().getName() + "', "
