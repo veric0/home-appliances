@@ -1,13 +1,10 @@
 package House;
 
 import Appliances.*;
-import Command.UnplugCommand;
 import Conditional.*;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
