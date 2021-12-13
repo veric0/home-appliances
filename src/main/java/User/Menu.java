@@ -2,11 +2,14 @@ package User;
 
 import Appliances.*;
 import Conditional.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.Scanner;
 
 public class Menu {
+    private static final Logger log = LogManager.getLogger(Menu.class);
 
     private final Scanner scanner;
     private final User user;
@@ -35,14 +38,19 @@ public class Menu {
                 case 1 -> {
                     Appliance newAppliance = createAppliance();
                     if (newAppliance != null) {
+                        log.info("Виклик команди створення нового електроприладу");
                         user.addAppliance(newAppliance);
                     }
                 }
                 case 2 -> findAppliance();
                 case 3 -> removeAppliance();
-                case 4 -> user.calculatePower();
+                case 4 -> {
+                    log.info("Виклик команди підрахунку потужності");
+                    user.calculatePower();
+                }
                 case 5 -> findApplianceWithinPowerLimits();
                 default -> {
+                    log.info("Виклик команди виходу з програми");
                     return;
                 }
             }
@@ -78,10 +86,13 @@ public class Menu {
                 4 - виключені електроприлади
                 """);
         int choice = inputInt(0, 4);
-        Condition condition;
         switch (choice) {
-            case 1 -> user.findAppliances(new TrueCondition());
+            case 1 -> {
+                log.info("Виклик команди пошуку");
+                user.findAppliances(new TrueCondition());
+            }
             case 2 -> {
+                log.info("Виклик команди пошуку приладів для ремонту");
                 user.findAppliances(new IsNeedsRepair());
                 System.out.print("Введіть ID електроприлада який потрібно поремонтувати (0 - скасувати): ");
                 int id = inputPositiveInt();
@@ -89,6 +100,7 @@ public class Menu {
                 user.repairAppliance(id);
             }
             case 3 -> {
+                log.info("Виклик команди пошуку увімкнених приладів");
                 user.findAppliances(new IsPluggedIn());
                 System.out.print("Введіть ID електроприлада який потрібно вимкнути (0 - скасувати): ");
                 int id = inputPositiveInt();
@@ -96,6 +108,7 @@ public class Menu {
                 user.unplugAppliance(id);
             }
             case 4 -> {
+                log.info("Виклик команди пошуку вимкнених приладів");
                 user.findAppliances(new IsUnplugged());
                 System.out.print("Введіть ID електроприлада який потрібно увімкнути (0 - скасувати): ");
                 int id = inputPositiveInt();
@@ -111,6 +124,7 @@ public class Menu {
         System.out.print("Введіть ID електроприлада який потрібно видалити (0 - скасувати): ");
         int id = inputPositiveInt();
         if (id != 0) {
+            log.info("Виклик команди видалення електроприладу");
             user.removeAppliance(id);
         }
     }
@@ -119,6 +133,7 @@ public class Menu {
         System.out.println("Ведіть мінімальну і максимальну потужність: ");
         int min = inputPositiveInt();
         int max = inputPositiveInt();
+        log.info("Виклик команди пошуку в заданому діапазоні");
         user.findAppliances(new IsPowerWithinLimits(min, max));
     }
 

@@ -2,6 +2,8 @@ package House;
 
 import Appliances.*;
 import Conditional.Condition;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class House {
+    private static final Logger log = LogManager.getLogger(House.class);
+
     private final Connection connection;
     private final int userID;
 
@@ -38,8 +42,10 @@ public class House {
                     }
                 }
             }
+            log.error("Не вдалося додати користувача");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
@@ -54,12 +60,14 @@ public class House {
                 totalPower = resultSet.getInt("sum");
                 res = "Загальна потужність = " + totalPower;
             } else {
+                log.error("Не вдалося порахувати загальну потужність");
                 res = "Не вдалося порахувати загальну потужність!";
             }
             System.out.println(res);
             return res;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
@@ -74,6 +82,7 @@ public class House {
             String type;
             int id, basicPower, power;
             boolean isPlugged;
+            int count = 0;
             while (set.next()) {
                 type = set.getString("type");
                 id = set.getInt("applianceID");
@@ -83,11 +92,13 @@ public class House {
                 appliance = createApplianceFromTable(id, type, basicPower, power, isPlugged);
                 if (appliance != null) {
                     founded.add(appliance);
+                    ++count;
                 }
             }
-
+            log.info("Знайдено " + count + " електроприладів");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         String res = listToString(founded, condition.getTitle());
         System.out.println(res);
@@ -104,10 +115,12 @@ public class House {
             } else {
                 res = "Не існує електроприладу з таким ID!";
             }
+            log.info(res);
             System.out.println(res);
             return res;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
@@ -141,11 +154,13 @@ public class House {
             } else {
                 res = "Немає електроприладу з таким ID для ремонту!";
             }
+            log.info(res);
             System.out.println(res);
             return res;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
@@ -179,11 +194,13 @@ public class House {
             } else {
                 res = "Немає електроприладу з таким ID для ввімкнення!";
             }
+            log.info(res);
             System.out.println(res);
             return res;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
@@ -217,15 +234,21 @@ public class House {
             } else {
                 res = "Немає електроприладу з таким ID для вимкнення!";
             }
+            log.info(res);
+            System.out.println(res);
             return res;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            log.error(throwables);
         }
         return null;
     }
 
     protected static String listToString(List<Appliance> appliances, String title) {
-        if (appliances == null || title == null) return null;
+        if (appliances == null || title == null) {
+            log.error("в методі listToString передали null");
+            return null;
+        }
         StringBuilder stringBuilder = new StringBuilder(300);
         stringBuilder.append("╔═══════════════════════════════════════════════════════╗\n");
         stringBuilder.append(String.format("║ %-53s ║\n", title));
@@ -248,6 +271,7 @@ public class House {
     }
 
     protected static Appliance createApplianceFromTable(int id, String type, int basicPower, int power, boolean isPlugged) {
+        if (type == null) return null;
         String blender = Blender.class.getName();
         String fridge = Fridge.class.getName();
         String kettle = Kettle.class.getName();
